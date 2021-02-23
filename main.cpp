@@ -12,7 +12,7 @@ duration syncTime = 1s;
 class PDO{
     public:
         int _currentData;
-        char _NodeId;
+        char _NodeId,Res;
         char ControllerTemp, MotorTemp;
         int ControlWord=0x0F, TargetVelocity, TargetTorque, TargetPosition, StatusWord;
         int PositionActualValue, TorqueActualValue, DCLinkVoltage, LogicPowerSupplyVoltage;
@@ -20,6 +20,8 @@ class PDO{
 
     PDO(char NodeId){
         _NodeId = NodeId;
+        ControlWord = 0x0F;
+        Res = 0x0;
     }
 
     bool isPDO(CANMessage msg){
@@ -57,7 +59,31 @@ class PDO{
         int _id = 256 + pdo*256 + _NodeId;
         return CANMessage(_id, data, _lenData);
     }
+    
     void writePDO(char pdo, char data[]);
+
+    void updatePDO(){
+        char data[8];
+        data[0] = ControlWord;
+        data[1] = 0;
+        data[2] = TargetVelocity%256;
+        data[3] = (TargetVelocity/256)%256;
+        data[4] = ((TargetVelocity/256)/256)%256;
+        data[5] = (((TargetVelocity/256)/256)/256)%256;
+        data[6] = TargetTorque%256;
+        data[7] = (TargetTorque/256)%256;
+        writePDO(1,data);
+
+        data[0] = TargetPosition%256;
+        data[1] = (TargetPosition/256)%256;
+        data[2] = ((TargetPosition/256)/256)%256;
+        data[3] = (((TargetPosition/256)/256)/256)%256;
+        data[4] = Res;
+        data[5] = Res;
+        data[6] = Res;
+        data[7] = Res;
+        writePDO(2,data);
+    }
 };
 
 char counter = 0;
