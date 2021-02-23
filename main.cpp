@@ -110,7 +110,6 @@ void PDO::writePDO(char pdo, char data[]){
 }
 
 void syncCanOpen(){
-    myPDO.writePDO(1, 0);
     char data = 0x00;
     can1.write(CANMessage(0x080, &data, 1));
     led2 = !led2;
