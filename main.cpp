@@ -57,7 +57,7 @@ class PDO{
         int _id = 256 + pdo*256 + _NodeId;
         return CANMessage(_id, data, _lenData);
     }
-
+    void writePDO(char pdo, char data[]);
 };
 
 char counter = 0;
@@ -77,7 +77,14 @@ PDO myPDO(1);
 
 void oku();
 
+void PDO::writePDO(char pdo, char data[]){
+    char _lenData = sizeof(*data);
+    int _id = 256 + pdo*256 + motorNodeID;
+    can1.write(CANMessage(_id, data, _lenData));
+}
+
 void syncCanOpen(){
+    myPDO.writePDO(1, 0);
     char data = 0x00;
     can1.write(CANMessage(0x080, &data, 1));
     led2 = !led2;
