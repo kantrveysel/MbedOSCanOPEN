@@ -29,5 +29,5 @@ class CANOpen{
         void updatePDO(char pdo);
         void writePDO(char pdo, char data[]);
         void readPDO(CANMessage msg, char pdo, char startByte, char size, int &a);
-
+        int  readError(CANMessage msg);
 };
