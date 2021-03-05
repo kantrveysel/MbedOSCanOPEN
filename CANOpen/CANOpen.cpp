@@ -104,3 +104,10 @@ void CANOpen::readPDO(CANMessage msg, char pdo, char startByte, char size, int &
         a = ret;
     }
 }
+
+int  CANOpen::readError(CANMessage msg){
+    if(msg.id == 0x80 + _NodeId){
+        return msg.data[0] + msg.data[1]*256;
+    }
+    return 0x0;
+}
