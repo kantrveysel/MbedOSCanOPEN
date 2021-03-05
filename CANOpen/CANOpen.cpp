@@ -111,3 +111,17 @@ int  CANOpen::readError(CANMessage msg){
     }
     return 0x0;
 }
+
+void CANOpen::readSDO(int main_index, char sub_index, int &a){
+
+    requestSDO(main_index, sub_index);
+    CANMessage msg;
+    can.read(msg);
+    if(msg.id == R_SDO_CAN_ID + _NodeId){
+        if(msg.data[1] + msg.data[2]*256 == main_index & msg.data[3] == sub_index){
+
+            a = msg.data[4] + msg.data[5]*256 + msg.data[6]*256^2 + msg.data[4]*256^3;
+
+        }
+    }
+}
