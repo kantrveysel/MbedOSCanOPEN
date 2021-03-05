@@ -29,6 +29,12 @@ int main(){
             CO.readPDO(msg, 1, 0, 1, Torq);
             CO.requestSDO(0x6040, 0x40);
             led1 != led1;
+            if(CO.readError(msg) != 0x0){
+            
+                printf("! ERROR ! %#X \n", CO.readError(msg));
+                led3 != led3;
+                
+            }
     }
     }
 }
