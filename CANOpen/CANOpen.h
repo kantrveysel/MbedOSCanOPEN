@@ -10,13 +10,13 @@ class CANOpen{
     private:
         CAN &can;
         char motorNodeID = 10;
-        duration syncTime = 1s;
         int _currentData;
         char _NodeId,Res;
 
     public:
         CANOpen(CAN &_can, char _NodeId);
         
+        duration syncTime = 1s;
         char ControllerTemp, MotorTemp;
         int ControlWord=0x0F, TargetVelocity, TargetTorque, TargetPosition, StatusWord;
         int PositionActualValue, TorqueActualValue, DCLinkVoltage, LogicPowerSupplyVoltage;
