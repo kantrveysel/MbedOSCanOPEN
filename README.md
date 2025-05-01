@@ -88,12 +88,6 @@ int main() {
 }
 ```
 
-## ⚙️ Technical Details
-
-- **Platform**: STM32 Nucleo F429ZI  
-- **Mbed OS Version**: 6.3.0  
-- **Protocol**: CANopen (SDO: `0x600/0x580`, SYNC: `0x080`)  
-- **CAN Bus**: 500 kbps, configurable pins (e.g., `PD_0`, `PD_1`)  
 
 ### 🔑 Key Functions
 - `requestSDO` – Requests SDO data  
@@ -101,6 +95,14 @@ int main() {
 - `updatePDO` – Sends PDOs for control  
 - `readPDO` – Reads real-time values  
 - `readError` – Returns CANopen error codes  
+
+## ⚙️ Technical Details
+
+- **Platform**: STM32 Nucleo F429ZI  
+- **Mbed OS Version**: 6.3.0  
+- **Protocol**: CANopen (SDO: `0x600/0x580`, SYNC: `0x080`)  
+- **CAN Bus**: 500 kbps, configurable pins (e.g., `PD_0`, `PD_1`)
+
 
 ## 🔮 Future Improvements
 - Replace `signed16` with `std::vector` for thread safety  
